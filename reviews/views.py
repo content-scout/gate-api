@@ -2,10 +2,11 @@
 from __future__ import unicode_literals
 
 from django.db.models import Avg
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import reverse, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
-from reviews.models import Movie
+from reviews.models import Movie, Review
 
 
 def search(request):
@@ -63,4 +64,25 @@ def content(request, movie_id):
         }
         resp['reviews'].append(user_review)
 
-        return JsonResponse(resp)
+    return JsonResponse(resp)
+
+
+# FIXME: Find out how to make this work..
+@csrf_exempt
+def add_review(request, movie_id):
+    if request.method == 'POST':
+        movie = get_object_or_404(Movie, pk=movie_id)
+        rating = request.POST['rating']
+        strobe_level = request.POST['strobe_level']
+        sound_level = request.POST['sound_level']
+        review = request.POST['review']
+
+        Review.objects.create(
+            movie=movie,
+            rating=rating,
+            strobe_level=strobe_level,
+            sound_level=sound_level,
+            review=review
+        )
+
+        return HttpResponse('OK', status=201)

@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'corsheaders',
     'reviews'
 ]
 
 MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
 ]
 
 ROOT_URLCONF = 'SeizureChecker.urls'
@@ -126,3 +129,5 @@ CONSUMER_KEY = 'GNtNdk5OJLvC0GGGMeI8NA4Q2'
 CONSUMER_SECRET = 'Ft0fyQTuSOcD7kcz9Xpk3yxOqhtG5tiS967xIJgMQVdTIfEhKo'
 ACCESS_TOKEN = '797272346843344896-USQvVPEDjzf3rP3RmjwgHBQy4zPyymc'
 ACCESS_SECRET = 'NphhchUSlavCyiT0i7tVhM7zP7PxuQBuCmiLTDSofWZm2'
+
+CORS_ORIGIN_ALLOW_ALL = True
